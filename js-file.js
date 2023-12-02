@@ -9,7 +9,26 @@ buttons.forEach(button => {
             figures = 0
             displayResult(figures)
         
-        }  else {
+        } else if (info === "%") {
+            percentage(figures)
+
+        } else if (info == "c".toUpperCase()) {
+            if (figures == "0" || 0) {
+                figures = 0
+                displayResult(figures)
+            } else {
+                if (figures.length == 1) {
+                    figures = 0
+                    displayResult(figures);
+                } else {
+                    figures = figures.slice(0, -1);
+                    displayResult(figures)
+                }
+
+            }
+
+
+        } else {
             if (figures[0] === "0") {
                 figures = figures.slice(1)
                 displayResult(figures)
@@ -19,12 +38,16 @@ buttons.forEach(button => {
                 displayErrorMsg();
             } else if (figures.length <= 15) {
                 displayResult(figures)
+            } else {
+                displayResultFloat(figures)
             }
 
         }
          
     })
 })
+
+
 
 // function reset () {
 //     const response = document.getElementById('buttonAC');
@@ -59,6 +82,10 @@ function displayResult (message) {
     return document.querySelector('.outputText').innerText = parseFloat(message);
 }
 
+function displayResultFloat (message) {
+    return document.querySelector('.outputText').innerText = message;
+}
+
 function displayErrorMsg () {
 
     return document.querySelector('.outputText').innerText = "Err. Max Exc.";
@@ -80,8 +107,10 @@ function divide (a, b) {
     return a / b;
 }
 
-function percentage (a) {
-    return a / 100
+function percentage (figures) {
+    figures = parseFloat(figures)
+    figures = figures / 100
+    return displayResult(figures)
 }
 
 function equalsTo (a) {
