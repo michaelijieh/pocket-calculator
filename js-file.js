@@ -1,187 +1,208 @@
-const buttons = document.querySelectorAll('.numButton');
-buttons.forEach(button => {
+const numbers = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "."]
+const opsSymbols = ["+", "-", "*", "/", "=", "%"]
+
+
+let opsInput = [];
+let numInputs = "";
+
+let compiler = [];
+
+
+
+const numberButtons = document.querySelectorAll('input');
+numberButtons.forEach(button => {
     button.addEventListener('click', () => {
         let input = button.value
-        inputCollector(input)
+        if (numbers.includes(input)) {
+            
+            numInputs += input;
+            console.log(numInputs);
+            display(numInputs);
+                        
+
+        } else if (opsSymbols.includes(input)) {
+            if (!numInputs == "") {
+                compiler.push(numInputs);
+                console.log(compiler)      
+
+
+            }
+            console.log("probe start")
+            console.log(compiler)
+            console.log(compiler.length)
+            console.log("probe end")
+            if (compiler.length == 2) {
+                let x = parseFloat(compiler[0]);
+                let y = parseFloat(compiler[1]);
+                let z;
+
+                if (opsInput[0] == "+") {
+
+                    commandAdd(x, y, z)
+
+                } else if (opsInput[0] == "-") {
+
+                    commandDifference(x, y, z)
+                   
+                } else if (opsInput[0] == "*") {
+
+                    commandProduct(x, y, z)
+
+
+                } else if (opsInput[0] == "/") {
+
+                    commandQuotient(x, y, z)
+                    
+                } else if (opsInput[0] == "%") {
+                    z = x + y;
+                    z/100
+                    emptyCompiler();
+
+                    compiler.push(z)
+                }
+
+
+                 else if (opsInput[0] = "=") {
+
+                    commandEquals(x, y, z)
+
+                }
+
+
+                console.log("answers")
+                console.log(compiler[0])
+                display(compiler[0])
+                
+            }
+
+            zeroNumCollector ();
+
+            // opsInput.push(input);
+            opsInput[0] = input;
+
+            console.log(opsInput)
+        
+        
+        } else if (input == "AC") {
+            clearScreen()
+        } else if (input == "C") {
+            backspace()
+
+        }
+        // else if (input == "%") {
+
+        //     let x = compiler[0];
+        //     if (compiler[0] == "" ) {
+        //         console.log('yes')
+                
+        //         console.log(0)
+        //     } else {
+        //         x = parseFloat(x) 
+        //         x/ 100
+        //         console.log(x)
+
+        //     }
+
+        //     emptyCompiler();
+
+        //     compiler.push(x)
+
+
+        // }
 
     })
 })
 
-let inputs = "";
+function clearScreen () {
+    opsInput = [];
+    numInputs = "";
 
+    compiler = [];
 
-function inputCollector(input) {
-    let numbers = ["0","1","2","3","4","5","6","7","8","9"]
+    document.querySelector('.outputText').innerText = "0";
+}
 
-    if (input == "AC") {
-        inputs = "0";
-        zeroInputs()
-        displayInput(inputs)
+function backspace () {
+    numInputs = String(numInputs);
 
-    } else if (input == "." && (!inputs.includes("."))) {
-        if (inputs == "0" || 0 || "") {
-            inputs = "0.";
-        displayInput(inputs)
-        } else if (inputs == "") {
-            inputs = '0.'
-            displayInput(inputs)
-        }
-        else {
-            inputs += ".";
-            displayInput(inputs)
-        }
-    } else if (input == "C") {
-        if (inputs == "0" || 0 || "") {
-            inputs = 0;
-            zeroInputs()
-            displayInput(inputs) 
-        } else if ((inputs.length == 1) || inputs == "." || (parseFloat(inputs) <= 0.1 && (inputs.includes(".")) && inputs.length == 3) || inputs == "0") {
-            inputs = 0;
-            zeroInputs()
-            displayInput(inputs)
-        } else if (inputs == "0" || 0) {
-            zeroInputs()
-            displayInput(inputs)
-        }
-        else {
-            inputs = inputs.slice(0, -1)
-            displayInput(inputs)
-        }
-    } else if (numbers.includes(input)) {
-        if (input == "0" && inputs.length == 1 && inputs.startsWith("0" || "0.")) {
-            inputs = "0";
-            displayInput(inputs);
+    numInputs = numInputs.slice(0,-1);
+    // if (numInputs == "" || 0 || "0") {
+    //     numInputs = ""
+    // } else {
+    //     String(numInputs);
+    //     numInputs = numInputs.slice(0,-1)
+    //     document.querySelector('.outputText').innerText = 0;
 
-        } else if (inputs.startsWith("0" || "0.") && parseFloat(inputs) == 0) {
-            inputs += input;
-            inputs = inputs.slice(1);
-            displayInput(inputs);
-        } else if (!numbers.includes("0") && inputs == "0" || "0.") {
-            inputs += input;
-            displayInput(inputs)
+    // }
 
-        } 
-        else {
-            inputs += input;
-            displayInput(inputs);
-        }
+    if (numInputs.length < 1) {
+        console.log('yes')
+        numInputs = "0";
+        document.querySelector('.outputText').innerText = numInputs;
+    } else if (typeof(numInputs) == "number") {
+        opsInput = [];
+        numInputs = "";
     
+        compiler = [];
     
-    
-    } else if (input == "%") {
-        percentage(inputs)
-    } else if (input == "=") {
-        equalsTo(inputs)
+        document.querySelector('.outputText').innerText = "0";
+    } else {
+        document.querySelector('.outputText').innerText = numInputs;
+
+
     }
+
+
+}
+
+function display (message) {
+    document.querySelector('.outputText').innerText = message;
 }
 
 
-function displayInput (inputs) {
-    if (inputs.length > 15) {
-        zeroInputs ()
-        return document.querySelector('.outputText').innerText = "Error"
-    }
-    return document.querySelector('.outputText').innerText = inputs;
+function zeroNumCollector () {
+    numInputs = ""
+    return numInputs
 }
 
-function zeroInputs () {
-    inputs = "0";
-    console.log("no")
-    return inputs
-}
-
-function sum (a, b) {
-    return a + b;
-}
-
-function substract (a, b) {
-    return a - b;
-}
-
-function multiply (a, b) {
-    return a * b;
-}
-
-function divide (a, b) {
-    return a / b;
-}
-
-function percentage (inputs) {
-    inputs = parseFloat(inputs)
-    inputs = inputs / 100
-    
-    displayInput(inputs)
-    zeroInputs()
-    inputs += inputs
-    return String(inputs)
-}
-
-function equalsTo (inputs) {
-    inputs = parseFloat(inputs)
-    
-    displayInput(inputs)
-    zeroInputs()
-    return inputs
+function emptyCompiler () {
+    compiler = []
+    return compiler
 }
 
 
 
+function commandAdd (x, y, z) {
+    z = x + y;
+    emptyCompiler();
 
+    return compiler.push(z)
+}
 
+function commandDifference (x, y, z) {
+    z = x - y;
+    emptyCompiler();
 
+    return compiler.push(z)
+}
 
-// let info = button.value
-// if (info == "ac".toUpperCase()) {
-//     figures = 0
-//     displayResult(figures)
+function commandProduct (x, y, z) {
+    z = x * y;
+    emptyCompiler();
 
-// } else if (info == "%") {
-//     percentage(figures)
+    return compiler.push(z)
+}
 
-// } else if (info == ".") {
-//     figures += "."
-//     displayResultFloat(figures)
-    
-// }
-// else if (info == "c".toUpperCase()) {
-//     if (figures == "0" || 0) {
-//         figures = 0
-//         displayResult(figures)
-//     } else {
-//         if (figures.length == 1) {
-//             figures = 0
-//             displayResult(figures);
-//         } else {
-//             figures = figures.slice(0, -1);
-//             displayResult(figures)
-//         }
+function commandQuotient (x, y, z) {
+    z = x / y;
+    emptyCompiler();
 
-//     }
+    return compiler.push(z)
+}
 
+function commandEquals (x, y, z) {
+    z = x + y;
+    emptyCompiler();
 
-// } else {
-//     if (figures[0] === "0") {
-//         figures = figures.slice(1)
-//         displayResult(figures)
-//     }
-//     figures += info
-//     if (figures.length >= 15) {
-//         displayErrorMsg();
-//     } else if (figures.length <= 15) {
-//         displayResult(figures)
-//     } else {
-//         displayResultFloat(figures)
-//     }
-
-// }
- 
-
-
-// function reset () {
-//     const response = document.getElementById('buttonAC');
-//     response.addEventListener('click', () => {
-//         location.reload()
-//     })
-// }
-
-// reset ()
+    return compiler.push(z)
+}

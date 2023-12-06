@@ -27,8 +27,6 @@ body {
     flex-direction: column;
     justify-content: space-between;
     
-    
-    
 }
 
 .logoContainer {
@@ -78,13 +76,47 @@ body {
 
 }
 
+.otherButton {
+    border-style: none;
+    background-color: white;
+    height: 60px;
+    width: 60px;
+    color: grey;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 16px;
+    font-weight: bolder;
+    margin: 0px;
+
+}
+
+.symbolButton {
+    border-style: none;
+    background-color: white;
+    height: 60px;
+    width: 60px;
+    color: grey;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 16px;
+    font-weight: bolder;
+    margin: 0px;
+
+}
+
 
 .numButton:hover {
     background-color: grey;
     color: aliceblue;
 }
 
+.otherButton:hover {
+    background-color: grey;
+    color: aliceblue;
+}
 
+.symbolButton:hover {
+    background-color: grey;
+    color: aliceblue;
+}
 
 .outputText {
     margin: 0;
@@ -118,10 +150,7 @@ body {
 }
 
 #buttonEquals {
-    color: whitesmoke;#backButton {
-    color: #400000;
-}
-    /* border-top: 4px solid black; */
+    color: whitesmoke;
     background-color: grey;
 }
 
@@ -131,7 +160,7 @@ body {
 }
 
 #buttonEquals:hover {
-    background-color: white;
+    background-color: #FAF9F6;
     color: #343434;
 }
 
@@ -190,6 +219,13 @@ body {
     color: grey;
     box-shadow: 0.5px grey;
     transform:translate(-0.25px -0.25px)
+}
+
+#backButton:active {
+    background-color: black;
+    color: grey;
+    box-shadow: 0.5px grey;
+    transform: translate(-0.25px -0.25px);
 }
 
 
