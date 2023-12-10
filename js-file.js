@@ -1,5 +1,5 @@
 const numbers = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "."]
-const opsSymbols = ["+", "-", "*", "/", "=", "%"]
+const opsSymbols = ["+", "-", "*", "/", "="]
 
 
 let opsInput = [];
@@ -8,9 +8,8 @@ let numInputs = "";
 let compiler = [];
 
 
-
-const numberButtons = document.querySelectorAll('input');
-numberButtons.forEach(button => {
+const allButtons = document.querySelectorAll('input');
+allButtons.forEach(button => {
     button.addEventListener('click', () => {
         let input = button.value
         if (numbers.includes(input)) {
@@ -18,12 +17,18 @@ numberButtons.forEach(button => {
             numInputs += input;
             console.log(numInputs);
             display(numInputs);
-                        
+
+            // Turns off the highlighted operand button
+            buttonHighlightOff ()
 
         } else if (opsSymbols.includes(input)) {
+
+            // Turns on the highlighted operand button
+            buttonHighlightOn (input);
+
             if (!numInputs == "") {
                 compiler.push(numInputs);
-                console.log(compiler)      
+                console.log(compiler);      
 
 
             }
@@ -38,37 +43,27 @@ numberButtons.forEach(button => {
 
                 if (opsInput[0] == "+") {
 
-                    commandAdd(x, y, z)
+                    commandAdd(x, y, z);
 
                 } else if (opsInput[0] == "-") {
 
-                    commandDifference(x, y, z)
+                    commandDifference(x, y, z);
                    
                 } else if (opsInput[0] == "*") {
 
-                    commandProduct(x, y, z)
+                    commandProduct(x, y, z);
 
 
                 } else if (opsInput[0] == "/") {
 
-                    commandQuotient(x, y, z)
+                    commandQuotient(x, y, z);
                     
-                } else if (opsInput[0] == "%") {
-                    z = x + y;
-                    z/100
-                    emptyCompiler();
+                } else if (opsInput[0] == "=") {
 
-                    compiler.push(z)
-                }
+                    commandEquals(x, y, z);
 
-
-                 else if (opsInput[0] = "=") {
-
-                    commandEquals(x, y, z)
-
-                }
-
-
+                } 
+                
                 console.log("answers")
                 console.log(compiler[0])
                 display(compiler[0])
@@ -77,10 +72,11 @@ numberButtons.forEach(button => {
 
             zeroNumCollector ();
 
-            // opsInput.push(input);
             opsInput[0] = input;
 
-            console.log(opsInput)
+            console.log(opsInput);
+
+            
         
         
         } else if (input == "AC") {
@@ -88,36 +84,94 @@ numberButtons.forEach(button => {
         } else if (input == "C") {
             backspace()
 
+        } 
+        else if (input == "%") {
+
+            if (compiler = []) {
+                numInputs = parseFloat(numInputs)
+                let percentResult = numInputs / 100;
+
+                display(percentResult)
+                compiler.push(String(percentResult))
+
+                numInputs = "";
+
+
+            } else if (compiler = ![]) {
+                numInputs = parseFloat(compiler([0]))
+                let percentResult2 = numInputs / 100;
+
+                display(percentResult2)
+                compiler.push(String(percentResult2))
+
+
+            }
+
+
+            // if (!numInputs == "") {
+            //     compiler.push(numInputs);
+            //     console.log(compiler);      
+
+
+            // }
+            
+            // compiler.push(numInputs);
+            // console.log(compiler)
+            // let result = parseFloat(compiler[0]) / 100;
+
+            // // emptyCompiler();
+
+            // return compiler.push(result)
+
+
+            
+
+
+            // display(result)
+
         }
-        // else if (input == "%") {
-
-        //     let x = compiler[0];
-        //     if (compiler[0] == "" ) {
-        //         console.log('yes')
-                
-        //         console.log(0)
-        //     } else {
-        //         x = parseFloat(x) 
-        //         x/ 100
-        //         console.log(x)
-
-        //     }
-
-        //     emptyCompiler();
-
-        //     compiler.push(x)
-
-
-        // }
-
+        
     })
 })
+
+
+
+
+
+function buttonHighlightOn (input) {
+    const button = document.querySelectorAll('.symbolButton');
+    button.forEach(button => {
+        if (button.value == input) {
+            button.style.backgroundColor = "grey";
+            button.style.color = "white";
+            
+        } else {
+            button.style.backgroundColor = "#FAF9F6";
+            button.style.color = "grey";
+        }
+
+    })
+
+}
+
+function buttonHighlightOff () {
+    const button = document.querySelectorAll('.symbolButton');
+    button.forEach(button => {
+        
+        button.style.backgroundColor = "#fAF9F6";
+        button.style.color = "grey";
+        
+    })
+
+    
+}
 
 function clearScreen () {
     opsInput = [];
     numInputs = "";
 
     compiler = [];
+    buttonHighlightOff ();
 
     document.querySelector('.outputText').innerText = "0";
 }
@@ -126,14 +180,6 @@ function backspace () {
     numInputs = String(numInputs);
 
     numInputs = numInputs.slice(0,-1);
-    // if (numInputs == "" || 0 || "0") {
-    //     numInputs = ""
-    // } else {
-    //     String(numInputs);
-    //     numInputs = numInputs.slice(0,-1)
-    //     document.querySelector('.outputText').innerText = 0;
-
-    // }
 
     if (numInputs.length < 1) {
         console.log('yes')
@@ -151,12 +197,13 @@ function backspace () {
 
 
     }
-
-
 }
+
 
 function display (message) {
     document.querySelector('.outputText').innerText = message;
+
+
 }
 
 
@@ -164,6 +211,7 @@ function zeroNumCollector () {
     numInputs = ""
     return numInputs
 }
+
 
 function emptyCompiler () {
     compiler = []
@@ -206,3 +254,8 @@ function commandEquals (x, y, z) {
 
     return compiler.push(z)
 }
+
+// function commandPercentage (z) {
+//     emptyCompiler();
+//     return compiler.push(z)
+// }
