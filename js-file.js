@@ -13,6 +13,10 @@ allButtons.forEach(button => {
     button.addEventListener('click', () => {
         let input = button.value
         if (numbers.includes(input)) {
+
+            if (numInputs.length >= 1 && numInputs[0] == "0" && numInputs[1] != ".") {
+                numInputs = numInputs.slice(1)
+            }
             
             numInputs += input;
             console.log(numInputs);
@@ -87,7 +91,7 @@ allButtons.forEach(button => {
         } 
         else if (input == "%") {
 
-            if (compiler = []) {
+            if (compiler.length == 0) {
                 numInputs = parseFloat(numInputs)
                 let percentResult = numInputs / 100;
 
@@ -97,7 +101,7 @@ allButtons.forEach(button => {
                 numInputs = "";
 
 
-            } else if (compiler = ![]) {
+            } else if (compiler.length > 0) {
                 numInputs = parseFloat(compiler([0]))
                 let percentResult2 = numInputs / 100;
 
@@ -107,31 +111,41 @@ allButtons.forEach(button => {
 
             }
 
+        } else if (input == "±") {
+            if (compiler.length == 0) {
 
-            // if (!numInputs == "") {
-            //     compiler.push(numInputs);
-            //     console.log(compiler);      
+                if (numInputs.length == 0) {
+                    numInputs = "-" + "0";
+                    console.log(numInputs);
+                    display(numInputs);
 
+                } else if (!numInputs.includes("-")) {
+                    numInputs = "-" + numInputs;
+                    console.log(numInputs);
+                    display(numInputs);
+                } else if (numInputs.includes("-")) {
+                    numInputs = numInputs.slice(1)
+                    console.log(numInputs)
+                    display(numInputs)
+                    
+                }
+            } else {
+                compiler[0] = String(compiler[0]);
 
-            // }
-            
-            // compiler.push(numInputs);
-            // console.log(compiler)
-            // let result = parseFloat(compiler[0]) / 100;
+                if (!compiler[0].includes("-")) {
+                    compiler[0] = "-" + String(compiler[0]);
+                    console.log(compiler[0]);
+                    display(compiler[0]);
+                } else if (compiler[0].includes("-")) {
 
-            // // emptyCompiler();
+                    compiler[0] = String(compiler[0]).slice(1);
+                    console.log(compiler[0]);
+                    display(compiler[0]);
 
-            // return compiler.push(result)
-
-
-            
-
-
-            // display(result)
-
-        }
+                }
+            }
         
-    })
+    }})
 })
 
 
@@ -201,9 +215,14 @@ function backspace () {
 
 
 function display (message) {
-    document.querySelector('.outputText').innerText = message;
-
-
+    if (message.length > 15) {
+        message = "Err. "
+        clearScreen ();
+        zeroNumCollector ();
+        emptyCompiler ();
+    } else {
+        document.querySelector('.outputText').innerText = message;
+}
 }
 
 
