@@ -4,7 +4,6 @@ const opsSymbols = ["+", "-", "*", "/", "="]
 
 let opsInput = [];
 let numInputs = "";
-
 let compiler = [];
 
 
@@ -13,12 +12,24 @@ allButtons.forEach(button => {
     button.addEventListener('click', () => {
         let input = button.value
         if (numbers.includes(input)) {
-
+            
             if (numInputs.length >= 1 && numInputs[0] == "0" && numInputs[1] != ".") {
                 numInputs = numInputs.slice(1)
             }
+
+            if (input == ".") {
+  
+                let count = (numInputs.match(/\./g) || []).length;
+
+                if (count == 0) {
+                    numInputs += ".";
+                } else {
+                    numInputs;
+                }
+            } else {
+                numInputs += input;
+            }
             
-            numInputs += input;
             console.log(numInputs);
             display(numInputs);
 
@@ -65,6 +76,7 @@ allButtons.forEach(button => {
                 } else if (opsInput[0] == "=") {
 
                     commandEquals(x, y, z);
+
 
                 } 
                 
@@ -116,16 +128,13 @@ allButtons.forEach(button => {
 
                 if (numInputs.length == 0) {
                     numInputs = "-" + "0";
-                    console.log(numInputs);
                     display(numInputs);
 
                 } else if (!numInputs.includes("-")) {
                     numInputs = "-" + numInputs;
-                    console.log(numInputs);
                     display(numInputs);
                 } else if (numInputs.includes("-")) {
                     numInputs = numInputs.slice(1)
-                    console.log(numInputs)
                     display(numInputs)
                     
                 }
@@ -147,9 +156,6 @@ allButtons.forEach(button => {
         
     }})
 })
-
-
-
 
 
 function buttonHighlightOn (input) {
@@ -273,8 +279,3 @@ function commandEquals (x, y, z) {
 
     return compiler.push(z)
 }
-
-// function commandPercentage (z) {
-//     emptyCompiler();
-//     return compiler.push(z)
-// }
