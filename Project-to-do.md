@@ -5,3 +5,5 @@ The button should be able to cancel all entry when a number is inputted right af
 
 
 <!-- max. number of digits -->
+
+<!-- To add input from the computer's button; numbers and operands alike -->
